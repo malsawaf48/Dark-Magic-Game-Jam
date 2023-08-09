@@ -59,6 +59,13 @@ Lclick={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Unit"
+2d_physics/layer_3="Wall"
+2d_physics/layer_4="Archer"
+
 [physics]
 
 common/enable_pause_aware_picking=true
