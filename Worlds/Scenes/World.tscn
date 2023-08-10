@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Character/Scenes/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Worlds/Art/TileSet.png" type="Texture" id=2]
 [ext_resource path="res://Monsters/Scenes/BattleStarter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Worlds/Scenes/BattleScene.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Environment" id=14]
 background_mode = 4
@@ -446,4 +447,24 @@ tile_data = PoolIntArray( 0, 4, 0, 1, 7, 0, 2, 7, 0, 3, 7, 0, 4, 7, 0, 5, 7, 0, 
 position = Vector2( 15, 32 )
 
 [node name="BattleStarter" parent="." instance=ExtResource( 3 )]
-position = Vector2( 61, 33 )
+position = Vector2( 34, 11 )
+
+[node name="BattleStarter2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 43, 20 )
+sprite = 2
+
+[node name="BattleStarter3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 46, 34 )
+sprite = 3
+
+[node name="BattleStarter4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 38, 47 )
+sprite = 4
+
+[node name="BattleScene" parent="." instance=ExtResource( 4 )]
+position = Vector2( 7, 124 )
+
+[connection signal="start_battle" from="BattleStarter" to="BattleScene" method="_on_BattleStarter_start_battle"]
+[connection signal="start_battle" from="BattleStarter2" to="BattleScene" method="_on_BattleStarter2_start_battle"]
+[connection signal="start_battle" from="BattleStarter3" to="BattleScene" method="_on_BattleStarter3_start_battle"]
+[connection signal="start_battle" from="BattleStarter4" to="BattleScene" method="_on_BattleStarter4_start_battle"]

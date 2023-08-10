@@ -1,5 +1,6 @@
 extends Node2D
 
+signal start_battle(enemychoice)
 export var sprite = 1
 var deerSprite = load("res://Monsters/Sprites/DeerMan.png")
 var leechSprite = load("res://Monsters/Sprites/WallLeech.png")
@@ -18,7 +19,8 @@ func _ready():
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept") and canStart == true:
-		print("CHANGE TO FIGHT SCENE")
+		canStart = false
+		emit_signal("start_battle", sprite)
 
 func _on_Area2D_body_entered(body):
 	$Label.show()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Menus/Fonts/Pixeled.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Monsters/Icons/DeerMan.png" type="Texture" id=2]
@@ -7,17 +7,22 @@
 [ext_resource path="res://Character/Icons/PlayerIcon.png" type="Texture" id=5]
 [ext_resource path="res://Monsters/Sprites/DeerMan.png" type="Texture" id=6]
 [ext_resource path="res://Character/Sprites/PlayerSprite.png" type="Texture" id=7]
-
-[sub_resource type="Environment" id=14]
-background_mode = 4
-glow_enabled = true
-glow_levels/1 = true
-glow_levels/2 = true
-glow_levels/4 = true
-glow_intensity = 0.9
-glow_strength = 1.12
-glow_bloom = 0.09
-glow_blend_mode = 1
+[ext_resource path="res://Character/Spells/DarkSpell2.png" type="Texture" id=8]
+[ext_resource path="res://Character/Spells/DarkIce.png" type="Texture" id=9]
+[ext_resource path="res://Character/Spells/DarkSpell.png" type="Texture" id=10]
+[ext_resource path="res://Character/Spells/Ghost.png" type="Texture" id=11]
+[ext_resource path="res://Character/Spells/DarkFire.png" type="Texture" id=12]
+[ext_resource path="res://Worlds/Scenes/BattleScene.gd" type="Script" id=13]
+[ext_resource path="res://Character/Spells/DarkSpellH.png" type="Texture" id=14]
+[ext_resource path="res://Character/Spells/DarkSpell2P.png" type="Texture" id=15]
+[ext_resource path="res://Character/Spells/GhostP.png" type="Texture" id=16]
+[ext_resource path="res://Character/Spells/DarkFirep.png" type="Texture" id=17]
+[ext_resource path="res://Character/Spells/DarkIceH.png" type="Texture" id=18]
+[ext_resource path="res://Character/Spells/DarkSpellP.png" type="Texture" id=19]
+[ext_resource path="res://Character/Spells/DarkIceP.png" type="Texture" id=20]
+[ext_resource path="res://Character/Spells/DarkFireH.png" type="Texture" id=21]
+[ext_resource path="res://Character/Spells/GhostH.png" type="Texture" id=22]
+[ext_resource path="res://Character/Spells/DarkSpell2H.png" type="Texture" id=23]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
@@ -38,10 +43,97 @@ Button/styles/hover = SubResource( 5 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 6 )
 
-[node name="BattleScene" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 2, 2.5 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 14 )
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 2, 3.5 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "Deer"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 56, 58 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Eye"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 56, 32.592 ), Vector2( 56, 53.495 ), Vector2( 56, 58.291 ), Vector2( 56, 37.298 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Flame"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 60.454, 44.222 ), Vector2( 56, 58 ), Vector2( 48.499, 44.07 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Leech"
+length = 2.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 52, 32 ), Vector2( 56, 38 ), Vector2( 52, 46 ), Vector2( 58, 53 ), Vector2( 52, 57 ), Vector2( 57, 49 ), Vector2( 51, 43 ), Vector2( 58, 36 ), Vector2( 56, 27 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ) ]
+}
+
+[node name="BattleScene" type="Node2D"]
+script = ExtResource( 13 )
 
 [node name="Backround" type="Sprite" parent="."]
 texture = ExtResource( 3 )
@@ -52,126 +144,239 @@ margin_right = 64.0
 margin_bottom = 64.0
 theme = SubResource( 3 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="PlayerBox" type="HBoxContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -33.0
+margin_bottom = -53.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer"]
-margin_right = 59.0
-margin_bottom = 64.0
-custom_constants/separation = 42
-
-[node name="Enemy" type="HBoxContainer" parent="Control/HBoxContainer/VBoxContainer"]
-margin_right = 59.0
+[node name="PlayerBox" type="HBoxContainer" parent="Control/PlayerBox"]
+margin_right = 28.0
 margin_bottom = 11.0
-custom_constants/separation = 1
+custom_constants/separation = 0
 
-[node name="EnemyIcon" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Enemy"]
-margin_right = 11.0
-margin_bottom = 11.0
-texture = ExtResource( 2 )
-
-[node name="EnemyName" type="Label" parent="Control/HBoxContainer/VBoxContainer/Enemy"]
-margin_left = 12.0
-margin_top = 1.0
-margin_right = 39.0
-margin_bottom = 10.0
-text = "DeerDemon"
-
-[node name="EH1" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Enemy"]
-margin_left = 40.0
-margin_right = 45.0
-margin_bottom = 11.0
-texture = ExtResource( 4 )
-
-[node name="EH2" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Enemy"]
-margin_left = 46.0
-margin_right = 51.0
-margin_bottom = 11.0
-texture = ExtResource( 4 )
-
-[node name="EH3" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Enemy"]
-margin_left = 52.0
-margin_right = 57.0
-margin_bottom = 11.0
-texture = ExtResource( 4 )
-
-[node name="Player" type="HBoxContainer" parent="Control/HBoxContainer/VBoxContainer"]
-margin_top = 53.0
-margin_right = 59.0
-margin_bottom = 64.0
-custom_constants/separation = 1
-
-[node name="PlayerIcon" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Player"]
+[node name="Icon" type="TextureRect" parent="Control/PlayerBox/PlayerBox"]
 margin_right = 11.0
 margin_bottom = 11.0
 texture = ExtResource( 5 )
 
-[node name="PlayerName" type="Label" parent="Control/HBoxContainer/VBoxContainer/Player"]
-margin_left = 12.0
-margin_top = 1.0
-margin_right = 41.0
-margin_bottom = 10.0
-text = "Dark Wizard"
-
-[node name="H1" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Player"]
-margin_left = 42.0
-margin_right = 47.0
+[node name="HandMIcons" type="VBoxContainer" parent="Control/PlayerBox/PlayerBox"]
+margin_left = 11.0
+margin_right = 28.0
 margin_bottom = 11.0
-texture = ExtResource( 4 )
+custom_constants/separation = 0
 
-[node name="H2" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Player"]
-margin_left = 48.0
-margin_right = 53.0
-margin_bottom = 11.0
-texture = ExtResource( 4 )
-
-[node name="H3" type="TextureRect" parent="Control/HBoxContainer/VBoxContainer/Player"]
-margin_left = 54.0
-margin_right = 59.0
-margin_bottom = 11.0
-texture = ExtResource( 4 )
-
-[node name="Control" type="Control" parent="Control"]
-margin_top = 12.0
-margin_right = 32.0
-margin_bottom = 52.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Control"]
-margin_right = 32.0
-margin_bottom = 40.0
+[node name="Hearts" type="HBoxContainer" parent="Control/PlayerBox/PlayerBox/HandMIcons"]
+margin_right = 17.0
+margin_bottom = 5.0
 custom_constants/separation = 1
 
-[node name="Button" type="Button" parent="Control/Control/VBoxContainer"]
+[node name="Heart1" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/Hearts"]
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="Heart2" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/Hearts"]
+margin_left = 6.0
+margin_right = 11.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="Heart3" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/Hearts"]
+margin_left = 12.0
+margin_right = 17.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerBox/PlayerBox/HandMIcons"]
+margin_top = 5.0
+margin_right = 17.0
+margin_bottom = 5.0
+custom_constants/separation = 1
+
+[node name="Mana1" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/HBoxContainer"]
+visible = false
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="Mana2" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/HBoxContainer"]
+visible = false
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_left = 6.0
+margin_right = 11.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="Mana3" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/HBoxContainer"]
+visible = false
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_left = 12.0
+margin_right = 17.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="EnemyBox" type="HBoxContainer" parent="Control"]
+margin_left = 32.0
+margin_right = 64.0
+margin_bottom = 11.0
+custom_constants/separation = 0
+alignment = 2
+
+[node name="HandMIcons" type="VBoxContainer" parent="Control/EnemyBox"]
+margin_left = 4.0
+margin_right = 21.0
+margin_bottom = 11.0
+custom_constants/separation = 0
+
+[node name="Hearts" type="HBoxContainer" parent="Control/EnemyBox/HandMIcons"]
+margin_right = 17.0
+margin_bottom = 5.0
+custom_constants/separation = 1
+
+[node name="EHeart1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts"]
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="EHeart2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts"]
+margin_left = 6.0
+margin_right = 11.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="EHeart3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts"]
+margin_left = 12.0
+margin_right = 17.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/EnemyBox/HandMIcons"]
+margin_top = 5.0
+margin_right = 17.0
+margin_bottom = 10.0
+custom_constants/separation = 1
+
+[node name="EMana1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="EMana2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_left = 6.0
+margin_right = 11.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="EMana3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_left = 12.0
+margin_right = 17.0
+margin_bottom = 5.0
+texture = ExtResource( 4 )
+
+[node name="Icon" type="TextureRect" parent="Control/EnemyBox"]
+margin_left = 21.0
 margin_right = 32.0
+margin_bottom = 11.0
+texture = ExtResource( 2 )
+
+[node name="SpellBox" type="HBoxContainer" parent="Control"]
+margin_top = 12.0
+margin_right = 64.0
+margin_bottom = 21.0
+custom_constants/separation = 1
+alignment = 1
+
+[node name="DarkSpell" type="TextureButton" parent="Control/SpellBox"]
+margin_left = 7.0
+margin_right = 16.0
 margin_bottom = 9.0
-text = "Dark Magic"
-clip_text = true
-icon_align = 1
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 19 )
+texture_hover = ExtResource( 14 )
 
-[node name="Button2" type="Button" parent="Control/Control/VBoxContainer"]
-margin_top = 10.0
-margin_right = 32.0
-margin_bottom = 19.0
-text = "Ghost SouL"
-clip_text = true
+[node name="DarkIce" type="TextureButton" parent="Control/SpellBox"]
+margin_left = 17.0
+margin_right = 26.0
+margin_bottom = 9.0
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 20 )
+texture_hover = ExtResource( 18 )
 
-[node name="Button3" type="Button" parent="Control/Control/VBoxContainer"]
-margin_top = 20.0
-margin_right = 32.0
-margin_bottom = 29.0
-text = "Black Ice"
+[node name="Ghost" type="TextureButton" parent="Control/SpellBox"]
+margin_left = 27.0
+margin_right = 36.0
+margin_bottom = 9.0
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 22 )
 
-[node name="Button4" type="Button" parent="Control/Control/VBoxContainer"]
-margin_top = 30.0
-margin_right = 32.0
-margin_bottom = 39.0
-text = "Black Fire"
+[node name="DarkLightning" type="TextureButton" parent="Control/SpellBox"]
+margin_left = 37.0
+margin_right = 46.0
+margin_bottom = 9.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 23 )
 
-[node name="Player" type="Sprite" parent="."]
-position = Vector2( 48, 44 )
+[node name="DarkFire" type="TextureButton" parent="Control/SpellBox"]
+margin_left = 47.0
+margin_right = 56.0
+margin_bottom = 9.0
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 21 )
+
+[node name="Character" type="Area2D" parent="."]
+position = Vector2( 11, 41 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Player" type="Sprite" parent="Character"]
 texture = ExtResource( 7 )
 
-[node name="Enemy" type="Sprite" parent="."]
-position = Vector2( 48, 15 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+shape = SubResource( 7 )
+
+[node name="Enemy" type="Area2D" parent="."]
+position = Vector2( 56, 27 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="EnemySprite" type="Sprite" parent="Enemy"]
 texture = ExtResource( 6 )
+
+[node name="EnemyCollison" type="CollisionShape2D" parent="Enemy"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 8 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 32, 32 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Deer = SubResource( 9 )
+anims/Eye = SubResource( 10 )
+anims/Flame = SubResource( 11 )
+anims/Leech = SubResource( 12 )
+anims/RESET = SubResource( 13 )
+
+[node name="PlayerTime" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="DeerTime" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="LeechTime" type="Timer" parent="."]
+
+[node name="EyeTime" type="Timer" parent="."]
+
+[node name="FlameTime" type="Timer" parent="."]
+
+[connection signal="timeout" from="PlayerTime" to="." method="_on_PlayerTime_timeout"]
+[connection signal="timeout" from="DeerTime" to="." method="_on_DeerTime_timeout"]
