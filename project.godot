@@ -15,6 +15,10 @@ run/main_scene="res://Worlds/Scenes/World.tscn"
 boot_splash/bg_color=Color( 0.152941, 0.152941, 0.266667, 1 )
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Worlds/Global.tscn"
+
 [display]
 
 window/size/width=64
@@ -102,6 +106,9 @@ Lclick={
 2d_physics/layer_1="World"
 2d_physics/layer_2="Character"
 2d_physics/layer_3="Interact"
+2d_physics/layer_4="Enemy"
+2d_physics/layer_5="Spell"
+2d_physics/layer_6="Espell"
 
 [physics]
 

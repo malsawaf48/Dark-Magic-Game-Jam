@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Menus/Fonts/Pixeled.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Monsters/Icons/DeerMan.png" type="Texture" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://Character/Spells/DarkFireH.png" type="Texture" id=21]
 [ext_resource path="res://Character/Spells/GhostH.png" type="Texture" id=22]
 [ext_resource path="res://Character/Spells/DarkSpell2H.png" type="Texture" id=23]
+[ext_resource path="res://Worlds/Scenes/Character.gd" type="Script" id=24]
+[ext_resource path="res://Worlds/Scenes/Enemy.gd" type="Script" id=25]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
@@ -46,8 +48,12 @@ Button/styles/pressed = SubResource( 6 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 2, 2.5 )
 
+[sub_resource type="Gradient" id=14]
+offsets = PoolRealArray( 0, 0.446927, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.203277, 0.222656, 0.202652, 1, 0, 0, 0, 1 )
+
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 2, 3.5 )
+extents = Vector2( 2, 2.5 )
 
 [sub_resource type="Animation" id=9]
 resource_name = "Deer"
@@ -234,6 +240,7 @@ custom_constants/separation = 0
 margin_right = 17.0
 margin_bottom = 5.0
 custom_constants/separation = 1
+alignment = 2
 
 [node name="EHeart1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts"]
 margin_right = 5.0
@@ -252,27 +259,25 @@ margin_right = 17.0
 margin_bottom = 5.0
 texture = ExtResource( 4 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/EnemyBox/HandMIcons"]
+[node name="Hearts2" type="HBoxContainer" parent="Control/EnemyBox/HandMIcons"]
+visible = false
 margin_top = 5.0
 margin_right = 17.0
 margin_bottom = 10.0
 custom_constants/separation = 1
 
-[node name="EMana1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
-modulate = Color( 0, 0.670588, 1, 1 )
+[node name="EMana1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_right = 5.0
 margin_bottom = 5.0
 texture = ExtResource( 4 )
 
-[node name="EMana2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
-modulate = Color( 0, 0.670588, 1, 1 )
+[node name="EMana2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_left = 6.0
 margin_right = 11.0
 margin_bottom = 5.0
 texture = ExtResource( 4 )
 
-[node name="EMana3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/HBoxContainer"]
-modulate = Color( 0, 0.670588, 1, 1 )
+[node name="EMana3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_left = 12.0
 margin_right = 17.0
 margin_bottom = 5.0
@@ -333,6 +338,9 @@ texture_hover = ExtResource( 21 )
 
 [node name="Character" type="Area2D" parent="."]
 position = Vector2( 11, 41 )
+collision_layer = 2
+collision_mask = 41
+script = ExtResource( 24 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -343,8 +351,25 @@ texture = ExtResource( 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 shape = SubResource( 7 )
 
+[node name="MagicPoint" type="Node2D" parent="Character"]
+position = Vector2( 5.194, 0 )
+
+[node name="DarkHit" type="CPUParticles2D" parent="Character"]
+emitting = false
+amount = 15
+lifetime = 0.44
+one_shot = true
+speed_scale = 0.96
+explosiveness = 0.62
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 14.69
+color_ramp = SubResource( 14 )
+
 [node name="Enemy" type="Area2D" parent="."]
 position = Vector2( 56, 27 )
+script = ExtResource( 25 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -355,6 +380,22 @@ texture = ExtResource( 6 )
 [node name="EnemyCollison" type="CollisionShape2D" parent="Enemy"]
 position = Vector2( 0, 0.5 )
 shape = SubResource( 8 )
+
+[node name="EDarkHit" type="CPUParticles2D" parent="Enemy"]
+emitting = false
+amount = 15
+lifetime = 0.44
+one_shot = true
+speed_scale = 0.96
+explosiveness = 0.62
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 14.69
+color_ramp = SubResource( 14 )
+
+[node name="EMagicPoint" type="Node2D" parent="Enemy"]
+position = Vector2( -4.687, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 32, 32 )
@@ -370,7 +411,7 @@ anims/RESET = SubResource( 13 )
 wait_time = 3.0
 
 [node name="DeerTime" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.4
 
 [node name="LeechTime" type="Timer" parent="."]
 
@@ -378,5 +419,8 @@ wait_time = 3.0
 
 [node name="FlameTime" type="Timer" parent="."]
 
+[connection signal="pressed" from="Control/SpellBox/DarkSpell" to="Character" method="_on_DarkSpell_pressed"]
+[connection signal="area_entered" from="Character" to="." method="_on_Character_area_entered"]
+[connection signal="area_entered" from="Enemy" to="." method="_on_Enemy_area_entered"]
 [connection signal="timeout" from="PlayerTime" to="." method="_on_PlayerTime_timeout"]
-[connection signal="timeout" from="DeerTime" to="." method="_on_DeerTime_timeout"]
+[connection signal="timeout" from="DeerTime" to="Enemy" method="_on_DeerTime_timeout"]
