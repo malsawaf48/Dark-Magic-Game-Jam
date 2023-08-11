@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Menus/Fonts/Pixeled.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Monsters/Icons/DeerMan.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://Character/Spells/DarkSpell2H.png" type="Texture" id=23]
 [ext_resource path="res://Worlds/Scenes/Character.gd" type="Script" id=24]
 [ext_resource path="res://Worlds/Scenes/Enemy.gd" type="Script" id=25]
+[ext_resource path="res://Character/Sprites/Mana.png" type="Texture" id=26]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
@@ -123,6 +124,23 @@ tracks/0/keys = {
 "values": [ Vector2( 56, 27 ), Vector2( 52, 32 ), Vector2( 56, 38 ), Vector2( 52, 46 ), Vector2( 58, 53 ), Vector2( 52, 57 ), Vector2( 57, 49 ), Vector2( 51, 43 ), Vector2( 58, 36 ), Vector2( 56, 27 ) ]
 }
 
+[sub_resource type="Animation" id=15]
+resource_name = "Leech2"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.9, 1.2, 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 56, 43 ), Vector2( 56, 43.5333 ), Vector2( 56, 58 ), Vector2( 56, 41.4667 ), Vector2( 56, 41 ), Vector2( 56, 27 ) ]
+}
+
 [sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "value"
@@ -205,7 +223,7 @@ visible = false
 modulate = Color( 0, 0.670588, 1, 1 )
 margin_right = 5.0
 margin_bottom = 5.0
-texture = ExtResource( 4 )
+texture = ExtResource( 26 )
 
 [node name="Mana2" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/HBoxContainer"]
 visible = false
@@ -213,7 +231,7 @@ modulate = Color( 0, 0.670588, 1, 1 )
 margin_left = 6.0
 margin_right = 11.0
 margin_bottom = 5.0
-texture = ExtResource( 4 )
+texture = ExtResource( 26 )
 
 [node name="Mana3" type="TextureRect" parent="Control/PlayerBox/PlayerBox/HandMIcons/HBoxContainer"]
 visible = false
@@ -221,7 +239,7 @@ modulate = Color( 0, 0.670588, 1, 1 )
 margin_left = 12.0
 margin_right = 17.0
 margin_bottom = 5.0
-texture = ExtResource( 4 )
+texture = ExtResource( 26 )
 
 [node name="EnemyBox" type="HBoxContainer" parent="Control"]
 margin_left = 32.0
@@ -260,24 +278,24 @@ margin_bottom = 5.0
 texture = ExtResource( 4 )
 
 [node name="Hearts2" type="HBoxContainer" parent="Control/EnemyBox/HandMIcons"]
-visible = false
 margin_top = 5.0
 margin_right = 17.0
 margin_bottom = 10.0
 custom_constants/separation = 1
+alignment = 2
 
-[node name="EMana1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
+[node name="EHeart1" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_right = 5.0
 margin_bottom = 5.0
 texture = ExtResource( 4 )
 
-[node name="EMana2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
+[node name="EHeart2" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_left = 6.0
 margin_right = 11.0
 margin_bottom = 5.0
 texture = ExtResource( 4 )
 
-[node name="EMana3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
+[node name="EHeart3" type="TextureRect" parent="Control/EnemyBox/HandMIcons/Hearts2"]
 margin_left = 12.0
 margin_right = 17.0
 margin_bottom = 5.0
@@ -405,6 +423,7 @@ anims/Deer = SubResource( 9 )
 anims/Eye = SubResource( 10 )
 anims/Flame = SubResource( 11 )
 anims/Leech = SubResource( 12 )
+anims/Leech2 = SubResource( 15 )
 anims/RESET = SubResource( 13 )
 
 [node name="PlayerTime" type="Timer" parent="."]
@@ -414,13 +433,20 @@ wait_time = 3.0
 wait_time = 2.4
 
 [node name="LeechTime" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="LeechTime2" type="Timer" parent="."]
+wait_time = 2.4
 
 [node name="EyeTime" type="Timer" parent="."]
 
 [node name="FlameTime" type="Timer" parent="."]
 
 [connection signal="pressed" from="Control/SpellBox/DarkSpell" to="Character" method="_on_DarkSpell_pressed"]
+[connection signal="pressed" from="Control/SpellBox/DarkIce" to="Character" method="_on_DarkIce_pressed"]
 [connection signal="area_entered" from="Character" to="." method="_on_Character_area_entered"]
 [connection signal="area_entered" from="Enemy" to="." method="_on_Enemy_area_entered"]
 [connection signal="timeout" from="PlayerTime" to="." method="_on_PlayerTime_timeout"]
 [connection signal="timeout" from="DeerTime" to="Enemy" method="_on_DeerTime_timeout"]
+[connection signal="timeout" from="LeechTime" to="Enemy" method="_on_LeechTime_timeout"]
+[connection signal="timeout" from="LeechTime2" to="Enemy" method="_on_LeechTime2_timeout"]

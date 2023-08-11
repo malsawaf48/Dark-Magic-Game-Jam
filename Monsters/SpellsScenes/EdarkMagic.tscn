@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Monsters/SpellsScenes/EdarkMagic.gd" type="Script" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.446927, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.203277, 0.222656, 0.202652, 1, 0, 0, 0, 1 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 2.0
+
+[node name="EdarkIce" type="Area2D"]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 17
+lifetime = 3.6
+preprocess = 2.8
+speed_scale = 1.39
+emission_shape = 1
+emission_sphere_radius = 1.53
+gravity = Vector2( 0, 0 )
+orbit_velocity = 1.39
+orbit_velocity_random = 1.0
+damping = 12.33
+damping_random = 1.0
+color_ramp = SubResource( 1 )
+hue_variation_random = 0.02
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[connection signal="area_entered" from="." to="." method="_on_EdarkIce_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
