@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Monsters/SpellsScenes/EFlame.gd" type="Script" id=1]
+[ext_resource path="res://Particles/x.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/Spells/Fire.wav" type="AudioStream" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.592179, 1 )
+colors = PoolColorArray( 1, 0, 0, 1, 0.824707, 0.625911, 0.251278, 1, 0.137207, 0.137207, 0.137207, 0.705882 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2, 7 )
+
+[node name="EFlame" type="Area2D"]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 20
+lifetime = 0.3
+local_coords = false
+texture = ExtResource( 2 )
+gravity = Vector2( 0, -3.563 )
+angle = 19.1
+angle_random = 1.0
+color_ramp = SubResource( 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 5 )
+amount = 20
+lifetime = 0.3
+local_coords = false
+texture = ExtResource( 2 )
+gravity = Vector2( 0, -3.563 )
+angle = 19.1
+angle_random = 1.0
+color_ramp = SubResource( 1 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
+position = Vector2( 0, -4 )
+amount = 20
+lifetime = 0.3
+local_coords = false
+texture = ExtResource( 2 )
+gravity = Vector2( 0, -3.563 )
+angle = 19.1
+angle_random = 1.0
+color_ramp = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="area_entered" from="." to="." method="_on_EFlame_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

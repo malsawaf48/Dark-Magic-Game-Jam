@@ -1,5 +1,7 @@
 extends Area2D
 
+func _ready():
+	$AudioStreamPlayer.play()
 
 func _on_Timer_timeout():
 	queue_free()

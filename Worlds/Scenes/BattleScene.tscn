@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Menus/Fonts/Pixeled.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Monsters/Icons/DeerMan.png" type="Texture" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://Worlds/Scenes/Character.gd" type="Script" id=24]
 [ext_resource path="res://Worlds/Scenes/Enemy.gd" type="Script" id=25]
 [ext_resource path="res://Character/Sprites/Mana.png" type="Texture" id=26]
+[ext_resource path="res://Sounds/Spells/Hurt.wav" type="AudioStream" id=27]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.137255, 0.137255, 0.137255, 1 )
@@ -55,6 +56,23 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.203277, 0.222656, 0.202652, 1, 0, 0, 0, 1
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 2, 2.5 )
+
+[sub_resource type="Animation" id=16]
+resource_name = "Boss"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 56, 27 ), Vector2( 48, 42 ), Vector2( 56, 58 ) ]
+}
 
 [sub_resource type="Animation" id=9]
 resource_name = "Deer"
@@ -315,38 +333,42 @@ custom_constants/separation = 1
 alignment = 1
 
 [node name="DarkSpell" type="TextureButton" parent="Control/SpellBox"]
-margin_left = 7.0
-margin_right = 16.0
+margin_left = 27.0
+margin_right = 36.0
 margin_bottom = 9.0
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 19 )
 texture_hover = ExtResource( 14 )
 
 [node name="DarkIce" type="TextureButton" parent="Control/SpellBox"]
-margin_left = 17.0
-margin_right = 26.0
+visible = false
+margin_left = 32.0
+margin_right = 41.0
 margin_bottom = 9.0
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 20 )
 texture_hover = ExtResource( 18 )
 
 [node name="Ghost" type="TextureButton" parent="Control/SpellBox"]
-margin_left = 27.0
-margin_right = 36.0
+visible = false
+margin_left = 37.0
+margin_right = 46.0
 margin_bottom = 9.0
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 16 )
 texture_hover = ExtResource( 22 )
 
 [node name="DarkLightning" type="TextureButton" parent="Control/SpellBox"]
-margin_left = 37.0
-margin_right = 46.0
+visible = false
+margin_left = 42.0
+margin_right = 51.0
 margin_bottom = 9.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 15 )
 texture_hover = ExtResource( 23 )
 
 [node name="DarkFire" type="TextureButton" parent="Control/SpellBox"]
+visible = false
 margin_left = 47.0
 margin_right = 56.0
 margin_bottom = 9.0
@@ -357,7 +379,7 @@ texture_hover = ExtResource( 21 )
 [node name="Character" type="Area2D" parent="."]
 position = Vector2( 11, 41 )
 collision_layer = 2
-collision_mask = 41
+collision_mask = 40
 script = ExtResource( 24 )
 __meta__ = {
 "_edit_group_": true
@@ -384,6 +406,9 @@ spread = 180.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 14.69
 color_ramp = SubResource( 14 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Character"]
+stream = ExtResource( 27 )
 
 [node name="Enemy" type="Area2D" parent="."]
 position = Vector2( 56, 27 )
@@ -415,10 +440,14 @@ color_ramp = SubResource( 14 )
 [node name="EMagicPoint" type="Node2D" parent="Enemy"]
 position = Vector2( -4.687, 0 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource( 27 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 32, 32 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Boss = SubResource( 16 )
 anims/Deer = SubResource( 9 )
 anims/Eye = SubResource( 10 )
 anims/Flame = SubResource( 11 )
@@ -427,7 +456,7 @@ anims/Leech2 = SubResource( 15 )
 anims/RESET = SubResource( 13 )
 
 [node name="PlayerTime" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.5
 
 [node name="DeerTime" type="Timer" parent="."]
 wait_time = 2.4
@@ -439,14 +468,42 @@ wait_time = 5.0
 wait_time = 2.4
 
 [node name="EyeTime" type="Timer" parent="."]
+wait_time = 2.2
 
 [node name="FlameTime" type="Timer" parent="."]
+wait_time = 2.1
+
+[node name="BossTimer1" type="Timer" parent="."]
+wait_time = 2.2
+
+[node name="BossTimer2" type="Timer" parent="."]
+wait_time = 3.8
+
+[node name="BossTimer3" type="Timer" parent="."]
+wait_time = 5.3
+
+[node name="BossTimer4" type="Timer" parent="."]
+wait_time = 8.0
+
+[node name="FlameDelay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="pressed" from="Control/SpellBox/DarkSpell" to="Character" method="_on_DarkSpell_pressed"]
 [connection signal="pressed" from="Control/SpellBox/DarkIce" to="Character" method="_on_DarkIce_pressed"]
+[connection signal="pressed" from="Control/SpellBox/Ghost" to="Character" method="_on_Ghost_pressed"]
+[connection signal="pressed" from="Control/SpellBox/DarkLightning" to="Character" method="_on_DarkLightning_pressed"]
+[connection signal="pressed" from="Control/SpellBox/DarkFire" to="Character" method="_on_DarkFire_pressed"]
 [connection signal="area_entered" from="Character" to="." method="_on_Character_area_entered"]
 [connection signal="area_entered" from="Enemy" to="." method="_on_Enemy_area_entered"]
 [connection signal="timeout" from="PlayerTime" to="." method="_on_PlayerTime_timeout"]
 [connection signal="timeout" from="DeerTime" to="Enemy" method="_on_DeerTime_timeout"]
 [connection signal="timeout" from="LeechTime" to="Enemy" method="_on_LeechTime_timeout"]
 [connection signal="timeout" from="LeechTime2" to="Enemy" method="_on_LeechTime2_timeout"]
+[connection signal="timeout" from="EyeTime" to="Enemy" method="_on_EyeTime_timeout"]
+[connection signal="timeout" from="FlameTime" to="Enemy" method="_on_FlameTime_timeout"]
+[connection signal="timeout" from="BossTimer1" to="Enemy" method="_on_BossTimer1_timeout"]
+[connection signal="timeout" from="BossTimer2" to="Enemy" method="_on_BossTimer2_timeout"]
+[connection signal="timeout" from="BossTimer3" to="Enemy" method="_on_BossTimer3_timeout"]
+[connection signal="timeout" from="BossTimer4" to="Enemy" method="_on_BossTimer4_timeout"]
+[connection signal="timeout" from="FlameDelay" to="Character" method="_on_FlameDelay_timeout"]

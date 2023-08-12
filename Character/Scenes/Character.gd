@@ -1,6 +1,6 @@
 extends KinematicBody2D
 export var acceleration = 800
-export var maxspeed = 16
+export var maxspeed = 24
 export var friction = 1000
 var velocity = Vector2.ZERO
 

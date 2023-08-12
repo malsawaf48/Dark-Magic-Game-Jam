@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Character/Sprites/Laser.png" type="Texture" id=1]
+[ext_resource path="res://Monsters/SpellsScenes/ELaser.gd" type="Script" id=2]
+[ext_resource path="res://Particles/Ice.png" type="Texture" id=3]
+[ext_resource path="res://Sounds/Spells/Laser2.wav" type="AudioStream" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 2.23607
+
+[node name="ELaser" type="Area2D"]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 9
+lifetime = 5.0
+speed_scale = 16.28
+local_coords = false
+texture = ExtResource( 1 )
+gravity = Vector2( 0, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Ice" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( -2, 0 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+amount = 4
+speed_scale = 1.92
+spread = 160.02
+gravity = Vector2( 0, 0 )
+initial_velocity = 13.39
+orbit_velocity = 0.99
+color = Color( 1, 0, 0, 1 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -7.896
+
+[connection signal="area_entered" from="." to="." method="_on_Laser_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
