@@ -14,3 +14,7 @@ func _ready():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	$Character/Camera2D.current = true
+
+
+func _on_Button_pressed():
+	get_tree().change_scene("res://Menus/MainMenu.tscn")

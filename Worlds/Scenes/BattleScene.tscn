@@ -489,6 +489,10 @@ wait_time = 8.9
 wait_time = 0.1
 one_shot = true
 
+[node name="tutorial" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
 [connection signal="pressed" from="Control/SpellBox/DarkSpell" to="Character" method="_on_DarkSpell_pressed"]
 [connection signal="pressed" from="Control/SpellBox/DarkIce" to="Character" method="_on_DarkIce_pressed"]
 [connection signal="pressed" from="Control/SpellBox/Ghost" to="Character" method="_on_Ghost_pressed"]
@@ -507,3 +511,4 @@ one_shot = true
 [connection signal="timeout" from="BossTimer3" to="Enemy" method="_on_BossTimer3_timeout"]
 [connection signal="timeout" from="BossTimer4" to="Enemy" method="_on_BossTimer4_timeout"]
 [connection signal="timeout" from="FlameDelay" to="Character" method="_on_FlameDelay_timeout"]
+[connection signal="timeout" from="tutorial" to="." method="_on_tutorial_timeout"]

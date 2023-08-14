@@ -138,6 +138,7 @@ func setup(var enemychoice):
 
 func deer():
 	$DeerTime.start()
+	$tutorial.start()
 	$AnimationPlayer.play("Deer")
 	Beat = true
 	
@@ -286,6 +287,8 @@ func exitBattle():
 		get_parent().get_node("AnimationPlayer").play("5flame")
 	elif Beat == true and enemytype == 5:
 		get_parent().get_node("BattleStarter5").queue_free()
+		get_parent().get_node("AnimationPlayer").play("Win")
+		
 		
 	if Beat == false and enemytype == 1:
 		get_parent().get_node("BattleStarter").canStart = true
@@ -303,3 +306,7 @@ func exitBattle():
 	Global.playRegular()
 	if Beat == true:
 		Global.lvl += 1
+
+
+func _on_tutorial_timeout():
+	get_parent().get_node("Controls2").hide()
