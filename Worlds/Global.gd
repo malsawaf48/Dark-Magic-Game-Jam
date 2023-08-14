@@ -3,6 +3,7 @@ extends Node
 var battleMusic = preload("res://Sounds/Music/for_the_black_lord_loop.wav")
 var regularMusic = preload("res://Sounds/Music/dark_heart.wav")
 var lvl = 1
+
 func _ready():
 	playRegular()
 
@@ -13,3 +14,8 @@ func playBattle():
 func playRegular():
 	$Music.stream = regularMusic
 	$Music.play()
+
+func Sbloom():
+	$WorldEnvironment.environment.glow_enabled = true
+func Rbloom():
+	$WorldEnvironment.environment.glow_enabled = false

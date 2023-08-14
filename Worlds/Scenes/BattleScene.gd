@@ -270,6 +270,8 @@ func exitBattle():
 	$BossTimer2.stop()
 	$BossTimer3.stop()
 	$BossTimer4.stop()
+	$PlayerTime.stop()
+	mana = 0
 	if Beat == true and enemytype == 1:
 		get_parent().get_node("BattleStarter").queue_free()
 		get_parent().get_node("AnimationPlayer").play("2Deer")
