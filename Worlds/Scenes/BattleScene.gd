@@ -272,12 +272,16 @@ func exitBattle():
 	$BossTimer4.stop()
 	if Beat == true and enemytype == 1:
 		get_parent().get_node("BattleStarter").queue_free()
+		get_parent().get_node("AnimationPlayer").play("2Deer")
 	elif Beat == true and enemytype == 2:
 		get_parent().get_node("BattleStarter2").queue_free()
+		get_parent().get_node("AnimationPlayer").play("3leech")
 	elif Beat == true and enemytype == 3:
 		get_parent().get_node("BattleStarter3").queue_free()
+		get_parent().get_node("AnimationPlayer").play("4eye")
 	elif Beat == true and enemytype == 4:
 		get_parent().get_node("BattleStarter4").queue_free()
+		get_parent().get_node("AnimationPlayer").play("5flame")
 	elif Beat == true and enemytype == 5:
 		get_parent().get_node("BattleStarter5").queue_free()
 		

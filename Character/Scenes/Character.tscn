@@ -30,6 +30,7 @@ shape = SubResource( 1 )
 current = true
 
 [node name="Control" type="Control" parent="Camera2D"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

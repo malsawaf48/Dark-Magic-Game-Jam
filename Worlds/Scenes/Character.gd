@@ -7,6 +7,19 @@ var Laser =  preload("res://Character/SpellsScenes/Laser.tscn")
 var Flame = preload("res://Character/SpellsScenes/Flame.tscn")
 
 var speed = 0.35
+
+func _process(delta):
+	if Input.is_action_just_pressed("1"):
+		_on_DarkSpell_pressed()
+	elif Input.is_action_just_pressed("2"):
+		_on_DarkIce_pressed()
+	elif Input.is_action_just_pressed("3"):
+		_on_Ghost_pressed()
+	elif Input.is_action_just_pressed("4"):
+		_on_DarkLightning_pressed()
+	elif Input.is_action_just_pressed("5"):
+		_on_DarkFire_pressed()
+
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_down") and position.y <= 58:
 		position.y += speed
